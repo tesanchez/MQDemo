@@ -1,0 +1,574 @@
+---
+swagger: "2.0"
+info:
+  description: "The Payments API allows capturing payments from customers using a\
+    \ variety of payment methods. Charges can be created as one-off events, or payment\
+    \ information can be saved for later use. The API has support for all aspects\
+    \ of a transaction's lifecycle, from initial capture to cancellations and refunds.\n"
+  version: "1.0.0"
+  title: "Payments API"
+  contact:
+    name: "Payments Team"
+    email: "GCPayments@digitalriver.com"
+tags:
+- name: "sources"
+  description: "API resources for payment sources"
+schemes:
+- "https"
+produces:
+- "application/json"
+paths:
+  /sources:
+    get:
+      tags:
+      - "sources"
+      summary: "Retrieve list of payment sources"
+      operationId: "getSourceList"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetSourceListExample"
+        400:
+          description: "Invalid Offset"
+          schema:
+            $ref: "#/definitions/OffsetInvalidExample"
+      x-swagger-router-controller: "Sources"
+    post:
+      tags:
+      - "sources"
+      summary: "Create a new payment source"
+      operationId: "createSource"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateSourceExample"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/CreateSourceExampleResponse"
+        400:
+          description: "Not Valid"
+          schema:
+            $ref: "#/definitions/SourceInvalidRequestExample"
+      x-swagger-router-controller: "Sources"
+  /sources/{sourceId}:
+    get:
+      tags:
+      - "sources"
+      summary: "Retrieve a payment source"
+      operationId: "getSource"
+      parameters:
+      - name: "sourceId"
+        in: "path"
+        description: "The ID of the source."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetSourceExample"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/SourceNotFoundExample"
+      x-swagger-router-controller: "Sources"
+    post:
+      tags:
+      - "sources"
+      summary: "Update a payment source"
+      description: "Update part of an existing payment source."
+      operationId: "partialUpdateSource"
+      parameters:
+      - name: "sourceId"
+        in: "path"
+        description: "The ID of the source."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/PartialUpdateSourceExample"
+      responses:
+        200:
+          description: "Updated"
+          schema:
+            $ref: "#/definitions/PartialUpdateSourceExampleResponse"
+        400:
+          description: "Not Valid"
+          schema:
+            $ref: "#/definitions/SourceUpdateInvalidRequestExample"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/SourceNotFoundExample"
+      x-swagger-router-controller: "Sources"
+    delete:
+      tags:
+      - "sources"
+      summary: "Delete a payment source"
+      description: "Delete an existing payment source."
+      operationId: "deleteSource"
+      parameters:
+      - name: "sourceId"
+        in: "path"
+        description: "The ID of the source."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Deleted"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/SourceNotFoundExample"
+      x-swagger-router-controller: "Sources"
+definitions:
+  ErrorResponse:
+    properties:
+      errorCode:
+        type: "string"
+        description: "The code defining the error."
+      errorMessages:
+        type: "array"
+        description: "Detailed information about the error."
+        items:
+          type: "string"
+  Money:
+    required:
+    - "currency"
+    - "value"
+    properties:
+      value:
+        type: "number"
+        description: "The monetary amount."
+      currency:
+        type: "string"
+        description: "The three-character ISO currency code."
+  Address:
+    required:
+    - "city"
+    - "country"
+    - "line1"
+    - "postalCode"
+    properties:
+      line1:
+        type: "string"
+        description: "The first line of the address."
+      line2:
+        type: "string"
+        description: "The second line of the address."
+      city:
+        type: "string"
+        description: "The city."
+      state:
+        type: "string"
+        description: "The state or province."
+      country:
+        type: "string"
+        description: "The country."
+      postalCode:
+        type: "string"
+        description: "The postal code."
+  Owner:
+    properties:
+      name:
+        type: "string"
+        description: "The owner's name."
+      email:
+        type: "string"
+        description: "The owner's email address."
+  Source:
+    required:
+    - "type"
+    - "usage"
+    properties:
+      id:
+        type: "string"
+        description: "A unique identifier for this source."
+        readOnly: true
+      type:
+        type: "string"
+        description: "The payment type of the source. The payment type will correspond\
+          \ to another element in the source response that contains detailed information\
+          \ specific to the type. For example, a type of `creditCard` indicates that\
+          \ there is an object in the response named `creditCard` that will contain\
+          \ card-specific data. Possible values are:\n* creditCard\n* wireTransfer\n"
+      usage:
+        type: "string"
+        description: "The usage type of the source. Depending on the value, the source\
+          \ can be used only once, or it can be reused multiple times. Possible values\
+          \ are:\n* single\n* multiple\n"
+        default: "single"
+      status:
+        type: "string"
+        description: "The current status of the source. Only a source with a `chargeable`\
+          \ status can be used to create a charge. Possible values are:\n* chargeable\n\
+          * pending\n* cancelled\n* failed\n"
+        readOnly: true
+  SourceList:
+    properties:
+      offset:
+        type: "integer"
+        description: "The current offset of the first elemetn in the data array from\
+          \ the start of the collection."
+      limit:
+        type: "integer"
+        description: "The maximum number of source records in the response."
+      data:
+        type: "array"
+        description: "An array of source records."
+        items:
+          $ref: "#/definitions/Source"
+  CreditCard:
+    required:
+    - "cvv"
+    - "expirationMonth"
+    - "expirationYear"
+    - "number"
+    properties:
+      number:
+        type: "string"
+        description: "The card number, specified as a string with no spaces or separators."
+      expirationMonth:
+        type: "integer"
+        description: "One to two digits representing the expiration month."
+      expirationYear:
+        type: "integer"
+        description: "Four digits representing the expiration year."
+      cvv:
+        type: "string"
+        description: "The card verification code"
+      brand:
+        type: "string"
+        description: "The brand (e.g. Visa, MasterCard, Amercian Express, etc.)."
+        readOnly: true
+      lastFourDigits:
+        type: "string"
+        description: "The last four digits of the card number."
+        readOnly: true
+  Charge:
+    required:
+    - "description"
+    - "sourceId"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier for the object."
+        readOnly: true
+      sourceId:
+        type: "string"
+        description: "The unique identifier assigned to the desired source for the\
+          \ charge."
+      description:
+        type: "string"
+        description: "An arbitrary message related to the charge."
+      client:
+        type: "string"
+        description: "The client account this charge is under."
+      channel:
+        type: "string"
+        description: "The channel this charge is under."
+      authorized:
+        type: "boolean"
+        description: "Boolean representation of whether or not the charge has been\
+          \ authorized successfully."
+        readOnly: true
+      captured:
+        type: "boolean"
+        description: "Boolean representation of whether or not the charge has been\
+          \ captured."
+        readOnly: true
+      failureCode:
+        type: "string"
+        description: "Error code for charge failure."
+        readOnly: true
+      failureMessage:
+        type: "string"
+        description: "Message explaining charge failure."
+        readOnly: true
+      metadata:
+        type: "string"
+        description: "Set of key/value pairs to store additional information for charge"
+      orderId:
+        type: "string"
+        description: "ID of order for this charge"
+      status:
+        type: "string"
+        description: "The current status of the charge. Possible values are:\n* succeeded\n\
+          * pending\n* failed\n"
+        readOnly: true
+      created:
+        type: "string"
+        description: "Time when charge was created."
+        readOnly: true
+  CreateSourceExample:
+    allOf:
+    - $ref: "#/definitions/Source"
+    - example:
+        type: "creditCard"
+        usage: "single"
+        amount:
+          value: 10.25
+          currency: "USD"
+        owner:
+          name: "Guy Incognito"
+          email: "guy@example.org"
+          address:
+            line1: "1234 Fake St."
+            city: "Minnetonka"
+            state: "MN"
+            country: "USA"
+            postalCode: "55341"
+        creditCard:
+          number: "4444333322221111"
+          expirationMonth: 10
+          expirationYear: 2525
+          cvv: "123"
+  CreateSourceExampleResponse:
+    allOf:
+    - $ref: "#/definitions/Source"
+    - example:
+        id: "a6809a63-e6a9-4016-abbc-f33d19fccb5b"
+        type: "creditCard"
+        usage: "single"
+        amount:
+          value: 10.25
+          currency: "USD"
+        status: "chargeable"
+        owner:
+          name: "Guy Incognito"
+          email: "guy@example.org"
+          address:
+            line1: "1234 Fake St."
+            city: "Minnetonka"
+            state: "MN"
+            country: "USA"
+            postalCode: "55341"
+        creditCard:
+          brand: "Visa"
+          expirationMonth: 10
+          expirationYear: 2525
+          lastFourDigits: 1111
+  GetSourceListExample:
+    allOf:
+    - $ref: "#/definitions/SourceList"
+    - example:
+        limit: 10
+        offset: 0
+        data:
+        - id: "a6809a63-e6a9-4016-abbc-f33d19fccb5b"
+          type: "creditCard"
+          usage: "single"
+          amount:
+            value: 10.25
+            currency: "USD"
+          status: "chargeable"
+          owner:
+            name: "Guy Incognito"
+            email: "guy@example.org"
+            address:
+              line1: "1234 Fake St."
+              city: "Minnetonka"
+              state: "MN"
+              country: "USA"
+              postalCode: "55341"
+          creditCard:
+            brand: "Visa"
+            expirationMonth: 10
+            expirationYear: 2525
+            lastFourDigits: 1111
+  GetSourceExample:
+    allOf:
+    - $ref: "#/definitions/Source"
+    - example:
+        id: "78737974-f6bd-4841-9e64-460c1c398792"
+        type: "creditCard"
+        usage: "single"
+        amount:
+          value: 15.75
+          currency: "USD"
+        status: "chargeable"
+        owner:
+          name: "Guy Incognito"
+          email: "guy@example.org"
+          address:
+            line1: "1234 Fake St."
+            city: "Minnetonka"
+            state: "MN"
+            country: "USA"
+            postalCode: "55341"
+        creditCard:
+          brand: "Visa"
+          expirationMonth: 10
+          expirationYear: 2525
+          lastFourDigits: 1111
+  PartialUpdateSourceExample:
+    allOf:
+    - $ref: "#/definitions/Source"
+    - example:
+        amount:
+          value: 3.75
+          currency: "USD"
+  PartialUpdateSourceExampleResponse:
+    allOf:
+    - $ref: "#/definitions/Source"
+    - example:
+        id: "78737974-f6bd-4841-9e64-460c1c398792"
+        type: "creditCard"
+        usage: "single"
+        amount:
+          value: 3.75
+          currency: "USD"
+        status: "chargeable"
+        owner:
+          name: "Guy Incognito"
+          email: "guy@example.org"
+          address:
+            line1: "1234 Fake St."
+            city: "Minnetonka"
+            state: "MN"
+            country: "USA"
+            postalCode: "55341"
+        creditCard:
+          brand: "Visa"
+          expirationMonth: 10
+          expirationYear: 2525
+          lastFourDigits: 1111
+  SourceNotFoundExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "not-found"
+        errorDescription:
+        - "The source with id 827487c4-2790-4b7e-8ed5-d3813013293b was not found."
+  SourceInvalidRequestExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "invalid-request"
+        errorMessages:
+        - "Field 'usage' can not be empty."
+        - "Field 'type' can not be empty."
+  SourceUpdateInvalidRequestExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "invalid-request"
+        errorMessages:
+        - "Field 'amount/value' must be a positive number."
+  OffsetInvalidExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "invalid-offset"
+        errorMessages:
+        - "The requested offset is invalid for the collection."
+  CreateChargeExample:
+    allOf:
+    - $ref: "#/definitions/Charge"
+    - example:
+        amount:
+          value: 100.0
+          currency: "USD"
+        sourceId: "78737974-f6bd-4841-9e64-460c1c398792"
+        description: "Online Order"
+  PartialUpdateChargeExample:
+    allOf:
+    - $ref: "#/definitions/Charge"
+    - example:
+        description: "Online order for orderId 12345678"
+  ChargeInvalidRequestExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "invalid-request"
+        errorMessages:
+        - "Field 'sourceId' cannot be empty."
+        - "Field 'amount' cannot be empty."
+  ChargeNotFoundExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "not-found"
+        errorDescription:
+        - "The charge with id 12345678-1ab4-4841-9e64-460a56b78994 was not found."
+  ChargeUpdateInvalidRequestExample:
+    allOf:
+    - $ref: "#/definitions/ErrorResponse"
+    - example:
+        errorCode: "invalid-request"
+        errorMessages:
+        - "Field 'description' cannot be empty"
+parameters:
+  CreateSource:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/CreateSourceExample"
+  SourceId:
+    name: "sourceId"
+    in: "path"
+    description: "The ID of the source."
+    required: true
+    type: "string"
+  PartialUpdateSource:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/PartialUpdateSourceExample"
+  CreateCharge:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/CreateChargeExample"
+  ChargeId:
+    name: "chargeId"
+    in: "path"
+    description: "The ID of the charge."
+    required: true
+    type: "string"
+  PartialUpdateCharge:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/PartialUpdateChargeExample"
+responses:
+  SourceInvalid:
+    description: "Not Valid"
+    schema:
+      $ref: "#/definitions/SourceInvalidRequestExample"
+  SourceNotFound:
+    description: "Not Found"
+    schema:
+      $ref: "#/definitions/SourceNotFoundExample"
+  SourceUpdateInvalid:
+    description: "Not Valid"
+    schema:
+      $ref: "#/definitions/SourceUpdateInvalidRequestExample"
+  ChargeInvalid:
+    description: "Not Valid"
+    schema:
+      $ref: "#/definitions/ChargeInvalidRequestExample"
+  ChargeNotFound:
+    description: "Not Found"
+    schema:
+      $ref: "#/definitions/ChargeNotFoundExample"
+  ChargeUpdateInvalid:
+    description: "Not Valid"
+    schema:
+      $ref: "#/definitions/ChargeUpdateInvalidRequestExample"
+  OffsetInvalid:
+    description: "Invalid Offset"
+    schema:
+      $ref: "#/definitions/OffsetInvalidExample"
