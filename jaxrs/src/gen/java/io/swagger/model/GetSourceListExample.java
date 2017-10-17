@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * GetSourceListExample
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-17T14:23:50.193Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-17T18:16:26.056Z")
 public class GetSourceListExample extends SourceList  {
 
   @Override
