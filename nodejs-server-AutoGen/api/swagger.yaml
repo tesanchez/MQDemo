@@ -18,7 +18,7 @@ schemes:
 produces:
 - "application/json"
 paths:
-  /sources:
+  /sourcesForPayments:
     get:
       tags:
       - "sources"
