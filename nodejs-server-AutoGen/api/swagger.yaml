@@ -18,7 +18,7 @@ schemes:
 produces:
 - "application/json"
 paths:
-  /sourcesForPayments:
+  /sources:
     get:
       tags:
       - "sources"
@@ -475,7 +475,7 @@ definitions:
     - $ref: "#/definitions/Charge"
     - example:
         amount:
-          value: 100.0
+          value: 100
           currency: "USD"
         sourceId: "78737974-f6bd-4841-9e64-460c1c398792"
         description: "Online Order"
