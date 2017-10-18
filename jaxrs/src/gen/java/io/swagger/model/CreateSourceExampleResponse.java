@@ -31,7 +31,7 @@ import io.swagger.model.Source;
 /**
  * CreateSourceExampleResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-18T15:01:04.059Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-18T15:06:03.607Z")
 public class CreateSourceExampleResponse extends Source  {
 
   @Override
