@@ -129,6 +129,16 @@ paths:
           schema:
             $ref: "#/definitions/SourceNotFoundExample"
       x-swagger-router-controller: "Sources"
+  /sampleResource:
+    get:
+      summary: "sample description"
+      description: "sample"
+      operationId: "sampleResourceGET"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+      x-swagger-router-controller: "Default"
 definitions:
   ErrorResponse:
     properties:
