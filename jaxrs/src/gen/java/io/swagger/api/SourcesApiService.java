@@ -24,7 +24,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-19T14:40:29.097Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-19T17:19:19.800Z")
 public abstract class SourcesApiService {
     public abstract Response createSource(CreateSourceExample body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteSource(String sourceId,SecurityContext securityContext) throws NotFoundException;
