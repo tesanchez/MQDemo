@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * SourceNotFoundExample
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-18T15:06:03.607Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-19T17:19:19.800Z")
 public class SourceNotFoundExample extends ErrorResponse  {
 
   @Override
