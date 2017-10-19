@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * ErrorResponse
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-18T15:06:03.607Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-19T14:40:29.097Z")
 public class ErrorResponse   {
   @JsonProperty("errorCode")
   private String errorCode = null;
