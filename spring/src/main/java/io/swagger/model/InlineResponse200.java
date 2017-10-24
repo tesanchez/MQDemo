@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * InlineResponse200
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-24T15:05:34.112Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-24T15:21:55.022Z")
 
 public class InlineResponse200   {
   @JsonProperty("userUUid")
