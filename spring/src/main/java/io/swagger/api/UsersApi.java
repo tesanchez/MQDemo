@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.model.InlineResponse200;
 
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-19T20:36:00.315Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-24T15:05:34.112Z")
 
-@Api(value = "getColor", description = "the getColor API")
-public interface GetColorApi {
+@Api(value = "users", description = "the users API")
+public interface UsersApi {
 
-    @ApiOperation(value = "sample response", notes = "sample response", response = Void.class, tags={  })
+    @ApiOperation(value = "", notes = "Allows users to get employees from the database", response = InlineResponse200.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Void.class) })
-    @RequestMapping(value = "/getColor",
+        @ApiResponse(code = 200, message = "OK", response = InlineResponse200.class) })
+    @RequestMapping(value = "/users",
         method = RequestMethod.GET)
-    ResponseEntity<Void> getColorGet();
+    ResponseEntity<InlineResponse200> usersGet();
 
 }

@@ -10,19 +10,19 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-19T20:36:00.315Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-24T15:05:34.112Z")
 
 @Configuration
 public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("ColrosAPI1")
-            .description("brings back colors")
+            .title("HR API 1.0.1")
+            .description("post and pull employees from the DB")
             .license("")
             .licenseUrl("")
             .termsOfServiceUrl("")
-            .version("0.0.1")
+            .version("1.0.0")
             .contact(new Contact("","", ""))
             .build();
     }

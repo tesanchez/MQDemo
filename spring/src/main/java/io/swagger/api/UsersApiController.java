@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.model.InlineResponse200;
 
 import io.swagger.annotations.*;
 
@@ -16,14 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-19T20:36:00.315Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2017-10-24T15:05:34.112Z")
 
 @Controller
-public class GetColorApiController implements GetColorApi {
+public class UsersApiController implements UsersApi {
 
-    public ResponseEntity<Void> getColorGet() {
+    public ResponseEntity<InlineResponse200> usersGet() {
         // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<InlineResponse200>(HttpStatus.OK);
     }
 
 }
