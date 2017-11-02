@@ -4,10 +4,6 @@ info:
   description: "post and pull employees from the DB"
   version: "1.0.0"
   title: "HR API 1.0.1"
-host: "virtserver.swaggerhub.com"
-basePath: "/SmartBear_Software/HRAPI10/1.0.0"
-schemes:
-- "https"
 paths:
   /users:
     get:
@@ -18,44 +14,7 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/inline_response_200"
-    post:
-      description: "Allows users to submit user data to the DB"
-      parameters:
-      - in: "body"
-        name: "employee"
-        description: "Creates a new employee in DB"
-        required: false
-        schema:
-          $ref: "#/definitions/employee"
-      responses:
-        200:
-          description: "resource successfully added"
-          schema:
-            $ref: "#/definitions/inline_response_200_1"
-        201:
-          description: "User successfully added"
-          schema:
-            $ref: "#/definitions/employeeInfo"
 definitions:
-  employeeInfo:
-    type: "object"
-    properties:
-      userUuid:
-        type: "string"
-        format: "uuid"
-        example: "113a3d8d-ddac-4b0f-9f16-195c143e5312"
-        description: "Unique, immutable user identifier"
-      email:
-        type: "string"
-        format: "email"
-        example: "keshav.vasudevan@smartbear.com"
-      firstName:
-        type: "string"
-        example: "Keshav"
-      lastName:
-        type: "string"
-        example: "Vasudevan"
-    description: "The base user object for the company"
   inline_response_200:
     required:
     - "email"
@@ -81,35 +40,3 @@ definitions:
         type: "string"
         example: "temil"
         description: "users last name"
-  employee:
-    type: "object"
-    required:
-    - "email"
-    properties:
-      userUUid:
-        type: "string"
-        format: "uuid"
-        example: "113a3d8d-ddac-4b0f-9f16-15123512"
-        description: "ID to be submitted to DB"
-      email:
-        type: "string"
-        format: "email"
-        example: "JK@smartbear.com"
-      firstName:
-        type: "string"
-        example: "Nick"
-      lastName:
-        type: "string"
-        example: "O'Lodean"
-  inline_response_200_1:
-    properties:
-      status:
-        type: "integer"
-        example: 200
-        description: "status code"
-      message:
-        type: "string"
-        example: "resource added successfully"
-        description: "success message"
-x-azure-api-id: "sh-1508788019854"
-x-apigee-id: "HRAPI1"
