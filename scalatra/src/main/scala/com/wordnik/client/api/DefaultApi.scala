@@ -25,7 +25,9 @@
 package com.wordnik.client.api
 
 import com.wordnik.client.model.Employee
+import com.wordnik.client.model.EmployeeInfo
 import com.wordnik.client.model.Inline_response_200
+import com.wordnik.client.model.Inline_response_200_1
 
 import java.io.File
 
@@ -53,22 +55,22 @@ class DefaultApi (implicit val swagger: Swagger) extends ScalatraServlet
   }
   
 
-  val usersGetOperation = (apiOperation[Inline_response_200]("usersGet")
+  val usersToDBGetOperation = (apiOperation[Inline_response_200]("usersToDBGet")
       summary ""
       parameters()
   )
 
-  get("/users",operation(usersGetOperation)) {
+  get("/usersToDB",operation(usersToDBGetOperation)) {
   }
 
   
 
-  val usersPostOperation = (apiOperation[Unit]("usersPost")
+  val usersToDBPostOperation = (apiOperation[Inline_response_200_1]("usersToDBPost")
       summary ""
       parameters(bodyParam[Employee]("employee").description("").optional)
   )
 
-  post("/users",operation(usersPostOperation)) {
+  post("/usersToDB",operation(usersToDBPostOperation)) {
     
     
           val employee = parsedBody.extract[Employee]
