@@ -4,6 +4,10 @@ info:
   description: "post and pull employees from the DB"
   version: "1.0.0"
   title: "HR API 1.0.1"
+host: "virtserver.swaggerhub.com"
+basePath: "/SE-Design/Temil_HR_API_team2/1.0.0"
+schemes:
+- "https"
 paths:
   /users:
     get:
@@ -14,6 +18,10 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/inline_response_200"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/inline_response_400"
 definitions:
   inline_response_200:
     required:
@@ -40,3 +48,8 @@ definitions:
         type: "string"
         example: "temil"
         description: "users last name"
+  inline_response_400:
+    properties:
+      message:
+        type: "string"
+        example: "You have hit an invalid request. Please check your parameters again"
