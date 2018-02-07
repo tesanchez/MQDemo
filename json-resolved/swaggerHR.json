@@ -1,0 +1,90 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "post and pull employees from the DB",
+    "version" : "0.0.1",
+    "title" : "HR API"
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/SE-Design/TemilsHRAPICharter-Forkedversion/0.0.1",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/users" : {
+      "get" : {
+        "description" : "Allows users to get employees",
+        "parameters" : [ {
+          "name" : "UUID",
+          "in" : "query",
+          "description" : "UUID number of employee",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "first_name",
+          "in" : "query",
+          "description" : "Users first name",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "last_name",
+          "in" : "query",
+          "description" : "Users last name",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "inline_response_200" : {
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status code"
+        },
+        "UUID" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "3110-78-8832",
+          "description" : "ID from DB"
+        },
+        "first_name" : {
+          "type" : "string",
+          "example" : "Temil",
+          "description" : "Users first name"
+        },
+        "last_name" : {
+          "type" : "string",
+          "example" : "Sanchez",
+          "description" : "Users last name"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "t.s@sb.com",
+          "description" : "Users email"
+        },
+        "join_date" : {
+          "type" : "string",
+          "example" : "1511884800",
+          "description" : "Unix timestamp of user posted to DB"
+        }
+      },
+      "example" : {
+        "join_date" : "1511884800",
+        "last_name" : "Sanchez",
+        "UUID" : "3110-78-8832",
+        "first_name" : "Temil",
+        "email" : "t.s@sb.com",
+        "status" : 200
+      }
+    }
+  }
+}
